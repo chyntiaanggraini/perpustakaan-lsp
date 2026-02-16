@@ -10,8 +10,9 @@ use App\Http\Controllers\SiswaController;
 
 Route::get('/', function () {
     return view('welcome');
-    Route::get('/login', [LoginController::class, 'show'])->name('login');
+    Route::get('/login', [LoginController::class, 'show'])->name('login'); // hapus aja ini 
 });
+
 
 // Middleware guest berfungsi mengecek apabila user belum login. Apabila user
 Route::middleware('guest')->group(function () {

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -17,6 +19,10 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    //tambah var casts supaya model tau kalo role itu ambil dari enum UserRole, selain itu dia nolak
+    protected $casts = [
+        'role' => UserRole::class,
+    ];
     protected $fillable = [
         'name',
         'email',
@@ -32,6 +38,26 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /*tambahin relasi ke model lainn
+    bagian inii aku lupa tambahin di modul TwT
+    */
+
+      public function anggota()
+    {
+        return $this->belongsTo(Anggota::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === UserRole::ADMIN;
+    }
+
+    public function isSiswa(): bool
+    {
+        return $this->role === UserRole::SISWA;
+    }
+
 
     /**
      * Get the attributes that should be cast.
