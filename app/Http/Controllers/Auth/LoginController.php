@@ -13,9 +13,14 @@ class LoginController extends Controller
 return view('auth.login');
 }
 
-public function login($request){
+public function login(Request $request ){ // ini pake Request biasa
 
-if (! Auth::attempt($request->validated())){
+if (! Auth::attempt($request->validate([
+    'username' => 'required',
+    'password' => 'required'
+]) //validate manual dulu basic wajib ini diingat yaaa
+))
+{
 return back()->withErrors([
 'username' => 'username or password incorrect'
 ]);

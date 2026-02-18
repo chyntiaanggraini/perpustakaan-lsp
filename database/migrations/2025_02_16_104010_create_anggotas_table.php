@@ -9,6 +9,8 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
+    //RENAME JADI 2025 SUPAYA MIGRATE LEBIH AWAL
     public function up(): void
     {
         Schema::create('anggotas', function (Blueprint $table) {
