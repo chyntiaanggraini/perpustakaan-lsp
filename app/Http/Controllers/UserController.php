@@ -1,33 +1,70 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Enums\UserRole;
 use App\Models\Anggota;
+use App\Models\anggota as ModelsAnggota;
+use App\Models\User;
 use Illuminate\Http\Request;
-class AnggotaController extends Controller
+use Illuminate\Support\Facades\Hash;
+
+class UserController extends Controller // ganti jadi UserController yeah
 {
 public function index()
 {
-$anggota = Anggota::latest()->get();
-return view('admin.anggota.index', compact('anggota'));
+    $users = User::with('anggota')->get();
+return view('admin.anggota.index', compact('users'));
 }
-public function create()
+public function create(Request $request)
 {
-return view('admin.anggota.create');
+
+    //new logic buat anggota 
+
+    //ini method get, return frontend (halaman depan)
+    if($request->isMethod('get')){
+        return view('admin.anggota.create');
+    }
+
+    //kalo ini method post , dia ngirim data ke db buat row baru
+    if($request->isMethod('post')){
+        
+        $request->validate([
+        'username'=> 'required',
+        'password'=> 'required',
+        'nis' => 'required|unique:anggotas',
+        'nama' => 'required',
+        'kelas' => 'required',
+        'jurusan' => 'required'
+        ]);
+
+        $userAtr = [
+            'username' => $request->username,
+            'password'=> Hash::make($request->password),
+            'role' => UserRole::SISWA
+        ];
+
+        $anggota = anggota::create([
+            'nama' => $request->nama,
+            'nis' => $request->nis,
+            'kelas' => $request->kelas,
+            'jurusan' => $request->jurusan
+        ]); //buat data anggota
+
+        $userAtr['anggota_id'] = $anggota->id; //ambil id anggota buat dijadiin foreign key
+
+        User::create($userAtr); // buat data user dengan relasi ke anggota yang udah dibuat tadi.
+
+
+        return
+        redirect('/users')->with('success','Anggota
+        ditambahkan');
+    }
+
 
 }
 public function store(Request $request)
 {
-$request->validate([
-'nis' => 'required|unique:anggotas',
-'nama' => 'required',
-'kelas' => 'required',
-'jurusan' => 'required'
-]);
-Anggota::create($request->all());
-
-return
-redirect()->route('admin.anggota.index')->with('success','Anggota
-ditambahkan');
 }
 public function edit(Anggota $anggota)
 {
@@ -39,12 +76,16 @@ $anggota->update($request->all());
 
 return
 
-redirect()->route('admin.anggota.index')->with('success','Data
+redirect('/users')->with('success','Data
 diperbarui');
 }
-public function destroy(Anggota $anggota)
+public function destroy(String $id)
 {
-$anggota->delete();
+  $user = User::findOrFail($id);
+  $anggotaId = $user->anggota->id;
+  $user->destroy($id);
+  ModelsAnggota::destroy($anggotaId);
+
 return back()->with('success','Data dihapus');
 }
 }

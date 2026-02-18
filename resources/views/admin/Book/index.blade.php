@@ -141,13 +141,13 @@ text-red-700 dark:text-red-300">
 <ul class="list-disc list-inside
 
 space-y-1">
-
+{{-- 
 @foreach ($errors->all() as
 
 $error)
 
 <li>{{ $error }}</li>
-@endforeach
+@endforeach --}}
 </ul>
 </div>
 </div>
@@ -275,7 +275,7 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17
 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2
 0 014 0z"></path></svg>
 
-<p>No users found</p>
+<p>No books found</p>
 </div>
 </td>
 </tr>

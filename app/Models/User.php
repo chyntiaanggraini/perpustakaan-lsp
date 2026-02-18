@@ -24,9 +24,11 @@ class User extends Authenticatable
         'role' => UserRole::class,
     ];
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
+        'role',
+        'anggota_id'
     ];
 
     /**
@@ -42,10 +44,9 @@ class User extends Authenticatable
     /*tambahin relasi ke model lainn
     bagian inii aku lupa tambahin di modul TwT
     */
-
       public function anggota()
     {
-        return $this->belongsTo(Anggota::class);
+        return $this->belongsTo(anggota::class);
     }
 
     public function isAdmin(): bool

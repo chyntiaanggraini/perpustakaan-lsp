@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class anggota extends Model
 {
+
+    //add relasi ke order
     use HasFactory;
     
     protected $fillable = [
@@ -17,4 +19,7 @@ class anggota extends Model
     ];
 
     
+    public function order(){
+        return $this->hasMany(order::class);
+    }
 }

@@ -5,7 +5,12 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController; 
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\SiswaController;
+
+//koreksi import
 
 
 Route::get('/', function () {
@@ -43,7 +48,7 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get('/orders/{id}/edit', [OrderController::class, 'edit']);
     Route::put('/orders/{id}', [OrderController::class, 'update']);
 
-    Route::middleware(['auth', 'role:siswa'])->prefix('siswa')->group(function(){
-        Route::get('/dashboard', [SiswaController::class, 'dashboard']);
-    });
+    // Route::middleware(['auth', 'role:siswa'])->prefix('siswa')->group(function(){
+    //     Route::get('/dashboard', [SiswaController::class, 'dashboard']);
+    // });
 });

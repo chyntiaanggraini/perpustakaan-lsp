@@ -1,9 +1,13 @@
-@extends('layouts.app')
+@extends('admin.layout')
 @section('content')
 <h1 class="text-2xl font-bold mb-4">Tambah Anggota</h1>
-<form action="{{ route('admin.anggota.store') }}" method="POST"
+<form action="/users/create" method="POST"
 class="bg-white p-6 rounded shadow w-1/2">
 @csrf
+<label>Username</label>
+<input type="text" name="username" class="border w-full p-2 mb-3">
+<label>Password</label>
+<input type="password" name="password" class="border w-full p-2 mb-3">
 <label>NIS</label>
 <input type="text" name="nis" class="border w-full p-2 mb-3">
 <label>Nama</label>
@@ -16,3 +20,7 @@ class="bg-white p-6 rounded shadow w-1/2">
 rounded">Simpan</button>
 </form>
 @endsection
+
+
+
+{{-- nama route nya digantii yaa tiaa --}}
