@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class order extends Model
 {
-    //
+    //define model order 
 
     use HasFactory;
 
